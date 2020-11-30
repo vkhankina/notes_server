@@ -1,17 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form method="post" action="{{ url_for('create_note') }}" xmlns="http://www.w3.org/1999/html">
-        <div>
-            <label for="name">Name</label>
-            <input required name="name" maxlength="255" placeholder="Name" />
-        </div>
-        <div>
-            <label for="description">Description</label>
-            <textarea name="description" required rows="3" placeholder="Text..."></textarea>
-        </div>
-        <div>
-            <input type="submit"/>
-        </div>
-    </form>
+  <form method="post" action="{{ url_for('create_note') }}" xmlns="http://www.w3.org/1999/html">
+    <div>
+      <label for="name">
+        Name
+        <input required name="name" maxlength="255" placeholder="Name" />
+      </label>
+    </div>
+    <div>
+      <label for="description">
+        Description
+        <textarea name="description" required rows="3" placeholder="Text..."></textarea>
+      </label>
+    </div>
+    <div>
+        <input type="submit"/>
+    </div>
+  </form>
 {% endblock %}

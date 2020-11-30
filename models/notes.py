@@ -1,6 +1,6 @@
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 
-from app import db
+from db import db
 
 
 class Notes(db.Model):

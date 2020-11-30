@@ -1,16 +1,11 @@
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
+from db import db, migrate
 from config import config
+from controllers.notes import NotesController
 
 app = Flask(__name__)
 app.config.from_object(config)
-
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-from controllers.notes import NotesController
 
 
 @app.route('/', methods=['GET'])
@@ -32,6 +27,9 @@ def create_note():
 def delete_note(p_key):
     return NotesController.delete(p_key)
 
+
+db.init_app(app)
+migrate.init_app(app, db)
 
 if __name__ == '__main__':
     app.run()
