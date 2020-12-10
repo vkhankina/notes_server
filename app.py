@@ -1,32 +1,21 @@
 from flask import Flask, render_template
+from flask_cors import CORS
 
+from blueprints.notes import notes_bp
 from db import db, migrate
 from config import config
-from controllers.notes import NotesController
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_object(config)
 
-
-@app.route('/', methods=['GET'])
-def notes_list():
-    return NotesController.get()
+v1_prefix = '/api/v1'
+app.register_blueprint(notes_bp, url_prefix=f'{v1_prefix}/notes')
 
 
-@app.route('/form', methods=['GET'])
-def notes_form():
-    return render_template('form.html', title='New note')
-
-
-@app.route('/notes', methods=['POST'])
-def create_note():
-    return NotesController.post()
-
-
-@app.route('/notes/<int:p_key>/delete', methods=['GET'])
-def delete_note(p_key):
-    return NotesController.delete(p_key)
-
+@app.route('/')
+def index():
+    return 'OK'
 
 db.init_app(app)
 migrate.init_app(app, db)

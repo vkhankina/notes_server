@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'europe-north1-docker.pkg.dev/$PROJECT_ID/notes-edu-docker-repo/notes-edu-image:1.0', '.' ]
+images:
+- 'europe-north1-docker.pkg.dev/$PROJECT_ID/notes-edu-docker-repo/notes-edu-image:1.0'
