@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, g
 from marshmallow import ValidationError
 from middlewares.auth import get_user
 from models.notes import Notes
@@ -9,7 +9,8 @@ notes_bp = Blueprint('notes', __name__)
 @notes_bp.route('/', methods=['GET'])
 @get_user
 def get():
-    notes = Notes.list()
+    user = g.get('user')
+    notes = Notes.list(user)
     data = Notes.schema(many=True).dump(notes)
     return {'data': data}
 
@@ -21,7 +22,8 @@ def create():
     if not json_data:
         return {'error': "No input data provided"}, 400
     try:
-        entity = Notes.create(json_data)
+        user = g.get('user')
+        entity = Notes.create(user, json_data)
         data = entity.schema().dump(entity)
         return {'data': data}, 201
     except ValidationError as err:
