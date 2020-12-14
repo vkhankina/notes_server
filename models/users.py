@@ -8,7 +8,7 @@ class Users(db.Model):
     inserted_at = db.Column(TIMESTAMP(precision=0), default=db.func.now(), nullable=False)
     roles = db.Column(db.ARRAY(db.String(255)), default=['user'], nullable=False)
 
-    notes = db.relationship('Notes', lazy='select')
+    notes = db.relationship('Notes', lazy='select', cascade="all,delete")
 
     @classmethod
     def get(cls, p_key):
